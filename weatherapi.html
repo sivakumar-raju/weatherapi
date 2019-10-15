@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>weather</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<div style="text-align: center;">
+	<form> 
+	  <input type="text" placeholder=" Enter City" style="height: 35px;width: 17rem;border-radius: 22px;
+    border-style: none;" id="name">
+	  <input type="button" value="Search" class="btn " onclick="getName()">
+	</form>
+
+	<div id="cityname"></div>
+	<div id='currentweather'></div>
+	<div id="windspeed"></div>
+	</div>
+	<script>
+		function getName(){
+			var name = document.getElementById("name").value  
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		    	var a=JSON.parse(this.responseText)
+		    	var cityname=a.name;
+		    	var currentweather=a.weather[0].main+" , "+a.weather[0].description;
+		    	var windspeed=a.wind.speed;
+
+		       document.getElementById("cityname").innerHTML = "Current Location: "+"<b style='color:green'>"+ cityname+"</br>";
+		       document.getElementById("currentweather").innerHTML = "Current weather: "+"<b style='color:green'>"+currentweather+"</br>";
+		       document.getElementById("windspeed").innerHTML = "windspeed: "+"<b style='color:green'>"+ windspeed+"</br>"; 
+		       		    
+		       		    }
+		};
+		xhttp.open("GET", "https://api.openweathermap.org/data/2.5/weather?q="+name+"&appid=395dc0e85f0603d5a90b0431659cbc41", true);
+		xhttp.send(true);
+}
+	</script>
+
+
+</body>
+</html>
